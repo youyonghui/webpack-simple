@@ -7,9 +7,34 @@ const path = require('path');
 // console.log("-----打印配置完毕----------");
 
 module.exports = {
-    entry: './src/index.js',
+    // entry: './src/index.js', // 单个入口文件
+    // 多个入口文件
+    entry:{
+        app:"./src/index.js",
+        print:"./src/print.js"
+    },
     output: {
-        filename: 'bundle.js',
+        // filename: 'bundle.js',
+        filename:"[name].bundle.js",
         path: path.resolve(__dirname, 'dist')
+    },
+    module: {
+        // rules 规则
+        rules: [
+            {
+                test: /\.css$/, // 找到css文件
+                use: [ // 为了引入css，配置这两个加载器
+                    "style-loader",
+                    "css-loader"
+                ]
+            },
+
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    'file-loader'
+                ]
+            }
+        ]
     }
 };
